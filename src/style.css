@@ -5,24 +5,29 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 header {
   padding: 20px;
   font-size: 25px;
 }
+
 main {
   width: 90%;
   margin: 10px auto;
 }
+
 .scores--container--head {
   display: flex;
   align-items: center;
   padding: 20px 0;
   gap: 1rem;
 }
+
 .score--list {
   list-style: none;
   border: 2px solid black;
 }
+
 .score--list--item {
   padding: 7px 20px;
 }
@@ -30,22 +35,27 @@ main {
 .score--list--item:nth-child(even) {
   background-color: rgba(128, 128, 128, 0.376);
 }
+
 .refresh--btn {
   padding: 3px 10px;
 }
+
 .form--header {
   text-align: center;
   padding: 20px 0;
 }
+
 fieldset {
   display: flex;
   flex-direction: column;
   border: none;
   gap: 1rem;
 }
+
 form input {
   padding: 7px 10px;
 }
+
 .submit--btn {
   align-self: flex-end;
   padding: 4px 10px;
@@ -58,9 +68,11 @@ form input {
     gap: 2rem;
     padding: 20px;
   }
+
   .scores--container {
     width: 100%;
   }
+
   form {
     width: 100%;
   }
