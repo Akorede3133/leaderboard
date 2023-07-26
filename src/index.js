@@ -6,6 +6,8 @@ const userContainer = document.querySelector('.score--list');
 let gameId = '';
 const newGameObj = { name: 'ak_game' };
 const baseUrl = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/';
+
+/* **** Functions **** */
 const createGameOrPostScore = async (url, obj) => {
   try {
     const fecthOPtion = {
@@ -48,9 +50,11 @@ const displayUser = (users) => {
   }
   userContainer.insertAdjacentHTML('beforeend', userElement);
 };
+
+/* **** Eventlisteners ***** */
 window.addEventListener('DOMContentLoaded', () => {
   createGameOrPostScore(baseUrl, newGameObj).then((res) => {
-    gameId = res.result;
+    gameId = res?.result;
     const indexOfColon = gameId.indexOf(':');
     const indexOfAdded = gameId.indexOf('added');
     gameId = `${gameId.slice(indexOfColon + 1, indexOfAdded).trim()}`;
