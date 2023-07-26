@@ -39,3 +39,15 @@ window.addEventListener('DOMContentLoaded', () => {
     gameId = `${gameId.slice(indexOfColon + 1, indexOfAdded).trim()}`;
   });
 });
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const nameInput = form.querySelector('#name');
+  const scoreInput = form.querySelector('#score');
+  const user = nameInput.value;
+  const score = scoreInput.value;
+  const userInfo = { user, score };
+  createGameOrPostScore(`${baseUrl}${gameId}/scores/`, userInfo);
+  nameInput.value = '';
+  scoreInput.value = '';
+});
