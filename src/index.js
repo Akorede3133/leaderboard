@@ -51,3 +51,7 @@ form.addEventListener('submit', (e) => {
   nameInput.value = '';
   scoreInput.value = '';
 });
+
+refreshBtn.addEventListener('click', () => {
+  fetchScore(`${baseUrl}${gameId}/scores/`);
+});
