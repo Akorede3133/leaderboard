@@ -1,7 +1,9 @@
 import './style.css';
+
+const refreshBtn = document.querySelector('.refresh--btn');
 let gameId = '';
-const createGame = async (obj) => {
-  const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/';
+const baseUrl = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/';
+const createGameOrPostScore = async (url, obj) => {
   try {
     const fecthOPtion = {
       method: 'POST',
@@ -17,10 +19,12 @@ const createGame = async (obj) => {
     return error;
   }
 };
-const obj = { name: 'akgame' };
-createGame(obj).then((res) => {
-  gameId = res.result;
-  const indexOfColon = gameId.indexOf(':');
-  const indexOfAdded = gameId.indexOf('added');
-  gameId = `${gameId.slice(indexOfColon + 1, indexOfAdded).trim()}`;
-});
+const fetchScore = async (url) => {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
