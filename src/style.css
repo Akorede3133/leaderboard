@@ -28,6 +28,10 @@ main {
   border: 2px solid black;
 }
 
+.hide--score--list--border {
+  border: none;
+}
+
 .score--list--item {
   padding: 7px 20px;
 }

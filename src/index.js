@@ -2,6 +2,7 @@ import './style.css';
 
 const refreshBtn = document.querySelector('.refresh--btn');
 const form = document.querySelector('form');
+const userContainer = document.querySelector('.score--list');
 let gameId = '';
 const newGameObj = { name: 'ak_game' };
 const baseUrl = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/';
@@ -30,7 +31,23 @@ const fetchScore = async (url) => {
     return error;
   }
 };
-
+const displayUser = (users) => {
+  userContainer.innerHTML = '';
+  const userElement = users.map((user) => {
+    const li = `
+    <li class="score--list--item">
+    <span>${user.user}:</span>
+    <span>${user.score}</span>
+    </li>`;
+    return li;
+  }).join('');
+  if (users.length > 0) {
+    userContainer.classList.remove('hide--score--list--border');
+  } else {
+    userContainer.classList.add('hide--score--list--border');
+  }
+  userContainer.insertAdjacentHTML('beforeend', userElement);
+};
 window.addEventListener('DOMContentLoaded', () => {
   createGameOrPostScore(baseUrl, newGameObj).then((res) => {
     gameId = res.result;
@@ -53,5 +70,5 @@ form.addEventListener('submit', (e) => {
 });
 
 refreshBtn.addEventListener('click', () => {
-  fetchScore(`${baseUrl}${gameId}/scores/`);
+  fetchScore(`${baseUrl}${gameId}/scores/`).then((res) => displayUser(res?.result));
 });
