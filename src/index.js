@@ -3,8 +3,7 @@ import './style.css';
 const refreshBtn = document.querySelector('.refresh--btn');
 const form = document.querySelector('form');
 const userContainer = document.querySelector('.score--list');
-let gameId = '';
-const newGameObj = { name: 'ak_game' };
+const gameId = 'aJfQkEoLY170iVS5BLDy';
 const baseUrl = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/';
 
 /* **** Functions **** */
@@ -50,29 +49,34 @@ const displayUser = (users) => {
   }
   userContainer.insertAdjacentHTML('beforeend', userElement);
 };
-
+const updateScoreBoard = () => {
+  fetchScore(`${baseUrl}${gameId}/scores/`).then((res) => displayUser(res?.result));
+};
 /* **** Eventlisteners ***** */
 window.addEventListener('DOMContentLoaded', () => {
-  createGameOrPostScore(baseUrl, newGameObj).then((res) => {
-    gameId = res?.result;
-    const indexOfColon = gameId.indexOf(':');
-    const indexOfAdded = gameId.indexOf('added');
-    gameId = `${gameId.slice(indexOfColon + 1, indexOfAdded).trim()}`;
-  });
+  updateScoreBoard();
 });
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const nameInput = form.querySelector('#name');
   const scoreInput = form.querySelector('#score');
   const user = nameInput.value;
   const score = scoreInput.value;
   const userInfo = { user, score };
-  createGameOrPostScore(`${baseUrl}${gameId}/scores/`, userInfo);
-  nameInput.value = '';
-  scoreInput.value = '';
+  try {
+    const res = await createGameOrPostScore(`${baseUrl}${gameId}/scores/`, userInfo);
+    if (res?.result === 'Leaderboard score created correctly.') {
+      updateScoreBoard();
+      nameInput.value = '';
+      scoreInput.value = '';
+    }
+  } catch (error) {
+    return error;
+  }
+  return userInfo;
 });
 
 refreshBtn.addEventListener('click', () => {
-  fetchScore(`${baseUrl}${gameId}/scores/`).then((res) => displayUser(res?.result));
+  updateScoreBoard();
 });
